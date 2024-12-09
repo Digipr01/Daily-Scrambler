@@ -4,5 +4,5 @@ Daily scrambler is a discord bot that sends a Tnoodle generated scramble daily, 
 ## How to use
 Daily Scrambler is currently still being worked on, but I hope to get it working soon
 
-### Contributors
+## Contributors
 Main dev: Digipr01
