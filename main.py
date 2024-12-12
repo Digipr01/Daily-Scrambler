@@ -1,4 +1,5 @@
 import discord
+from discord import app_commands
 import json
 
 def parseToken():
@@ -7,16 +8,18 @@ def parseToken():
         print(type(file_data))
         return file_data["token"]
 
-class MyClient(discord.Client):
-    async def on_ready(self):
-        print(f'Logged on as {self.user}!')
-
-    async def on_message(self, message):
-        print(f'Message from {message.author}: {message.content}')
-
 intents = discord.Intents.default()
-intents.message_content = True
+client = discord.Client(intents=intents)
+tree = app_commands.CommandTree(client)
 
-client = MyClient(intents=intents)
+@client.event
+async def on_ready():
+    print(f"I have enabled myself to live! My name is {client.user.name}.")
+    await tree.sync()
+
+@tree.command(name="hi", description="This is really just a test")
+async def command_hi(interaction):
+    await interaction.response.send_message("DannyHPb")
+    
 token = parseToken()
 client.run(token)
