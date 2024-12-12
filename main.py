@@ -14,7 +14,7 @@ tree = app_commands.CommandTree(client)
 
 @client.event
 async def on_ready():
-    print(f"I have enabled myself to live! My name is {client.user.name}.")
+    print(f"Bot starting as {client.user.name}.")
     await tree.sync()
 
 @tree.command(name="hi", description="This is really just a test")
