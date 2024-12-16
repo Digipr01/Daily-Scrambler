@@ -12,3 +12,6 @@ Main dev: Digipr01
 ## To-do:
 Integrate Tnoodle
 Make commands
+
+### Resources to look at:
+-subprocess
