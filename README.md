@@ -9,9 +9,8 @@ Daily Scrambler is currently still being worked on, but I hope to give it comman
 ## Contributors
 Main dev: Digipr01
 
+I have used Tnoodle-CLI made by SpeedcuberOSS
+
 ## To-do:
 Integrate Tnoodle
 Make commands
-
-### Resources to look at:
--subprocess
