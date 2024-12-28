@@ -4,7 +4,8 @@ Daily scrambler is a discord bot that sends a Tnoodle generated scramble daily, 
 Daily scrambler was made for DannyHTv
 
 ## How to use
-Daily Scrambler is currently still being worked on, but I hope to give it commands soon
+Daily Scrambler is currently still being worked on, but there is alot already
+There is a command for every wca event, but some tend to not work; working on a fix!
 
 ## Contributors
 Main dev: Digipr01
@@ -12,5 +13,5 @@ Main dev: Digipr01
 I have used Tnoodle-CLI made by SpeedcuberOSS
 
 ## To-do:
-Integrate Tnoodle
-Make commands
+fix commands
+add leaderboard
