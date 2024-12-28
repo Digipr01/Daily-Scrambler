@@ -5,7 +5,7 @@ Daily scrambler was made for DannyHTv
 
 ## How to use
 Daily Scrambler is currently still being worked on, but there is alot already
-There is a command for every wca event, but some tend to not work; working on a fix!
+There is a command for every wca event, hope to add unofficial soon!
 
 ## Contributors
 Main dev: Digipr01
@@ -13,5 +13,4 @@ Main dev: Digipr01
 I have used Tnoodle-CLI made by SpeedcuberOSS
 
 ## To-do:
-fix commands
-add leaderboard
+add secrets
