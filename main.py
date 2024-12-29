@@ -16,7 +16,9 @@ def parseToken():
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
-timezone = datetime.timezone.utc
+timezone = datetime.timezone(datetime.timedelta(hours=1))
+
+privateGuild = discord.Object(id=1303082498929983549)
 
 #dailyScrambles
 scrambleTime = datetime.time(hour=7, minute=00, tzinfo=timezone)
@@ -24,7 +26,7 @@ scrambleChannelId = 1322667465372598333
 dailyCubes = ["two", "four_fast", "five", "six", "seven", "skewb", "sq1", "mega", "pyra"]
 dailyAverages = ["Single", "Mo3", "Ao5"]
 
-@tasks.loop(time=scrambleTime)
+@tasks.loop(minutes=10)
 async def sendDailyScramble():
 	await client.wait_until_ready()
 	scrambleChannel = client.get_channel(scrambleChannelId)
@@ -63,14 +65,14 @@ cubeTypes = {
 def scramble(cube, amount, sender="Unknown peep", daily=False):
 	print(f"{sender} has tried to generate {amount} scramble(s) for {cubeTypes[cube]}")
 	if not daily:
-		scramble_embed = discord.Embed(title=f"Your {cubeTypes[cube]} scramble(s)", color=0xa80000, timestamp=datetime.datetime.utcnow())
+		scramble_embed = discord.Embed(title=f"Your {cubeTypes[cube]} scramble(s)", color=0xa80000, timestamp=datetime.datetime.now(tz=timezone))
 		if cube == "clock":
 			scramble_embed.add_field(name="That circle is illegal around here bud", value="We do not like that circle, why you want a circle huh? Cubes are better. \nEnjoy your fake \'cube\' scramble.")
 	else:
 		if cube == "three":
-			scramble_embed = discord.Embed(title=f"Your daily 3x3 scramble(s)", color=0xa80000, timestamp=datetime.datetime.utcnow())
+			scramble_embed = discord.Embed(title=f"Your daily 3x3 scramble(s)", color=0xa80000, timestamp=datetime.datetime.now(tz=timezone))
 		else:
-			scramble_embed = discord.Embed(title=f"Today\'s extra scramble(s) are... ||{cubeTypes[cube]}||", color=0xa80000, timestamp=datetime.datetime.utcnow())
+			scramble_embed = discord.Embed(title=f"Today\'s extra scramble(s) are... ||{cubeTypes[cube]}||", color=0xa80000, timestamp=datetime.datetime.now(tz=timezone))
 	if True:
 		if cube != "three_oh":
 			scramble_cube = cube
@@ -181,28 +183,24 @@ async def command_pyraminx(interaction, amount: typing.Literal["Single", "Mo3", 
 @tree.command(name="square-1", description="Generates square-1 scrambles.")
 @app_commands.describe(amount="How many cubes do you want scrambled?")
 async def command_square_1(interaction, amount: typing.Literal["Single", "Mo3", "Ao5"] = "Single"):
-	print(amount)
 	await interaction.response.send_message("Generating scrambles, give me a second")
 	await interaction.edit_original_response(content=None, embed=scramble("sq1", AverageTypes[amount], sender=interaction.user))
 
 @tree.command(name="3x3-blindfolded", description="Generates 3x3-blindfolded scrambles.")
 @app_commands.describe(amount="How many cubes do you want scrambled?")
 async def command_3bld(interaction, amount: typing.Literal["Single", "Mo3"] = "Single"):
-	print(amount)
 	await interaction.response.send_message("Generating scrambles, give me a second")
 	await interaction.edit_original_response(content=None, embed=scramble("three_ni", AverageTypes[amount], sender=interaction.user))
 	
 @tree.command(name="4x4-blindfolded", description="Generates 4x4-blindfolded scrambles.")
 @app_commands.describe(amount="How many cubes do you want scrambled?")
 async def command_4bld(interaction, amount: typing.Literal["Single", "Mo3"] = "Single"):
-	print(amount)
 	await interaction.response.send_message("Generating scrambles, give me a second")
 	await interaction.edit_original_response(content=None, embed=scramble("four_ni", AverageTypes[amount], sender=interaction.user))
 	
 @tree.command(name="5x5-blindfolded", description="Generates 5x5-blindfolded scrambles.")
 @app_commands.describe(amount="How many cubes do you want scrambled?")
 async def command_5bld(interaction, amount: typing.Literal["Single", "Mo3"] = "Single"):
-	print(amount)
 	await interaction.response.send_message("Generating scrambles, give me a second")
 	await interaction.edit_original_response(content=None, embed=scramble("five_ni", AverageTypes[amount], sender=interaction.user))
 	
@@ -214,7 +212,6 @@ async def command_fmc(interaction):
 @tree.command(name="clock", description="Generates clock scrambles. (ew)")
 @app_commands.describe(amount="How many cubes do you want scrambled?")
 async def command_clock(interaction, amount: typing.Literal["Single", "Mo3", "Ao5"] = "Single"):
-	print(amount)
 	await interaction.response.send_message("Generating scrambles, give me a second")
 	await interaction.edit_original_response(content=None, embed=scramble("clock", AverageTypes[amount], sender=interaction.user))
 

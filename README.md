@@ -14,3 +14,4 @@ I have used Tnoodle-CLI made by SpeedcuberOSS
 
 ## To-do:
 add secrets
+make /terminate private command
