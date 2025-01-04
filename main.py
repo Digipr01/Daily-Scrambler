@@ -23,10 +23,10 @@ privateGuild = discord.Object(id=1303082498929983549)
 #dailyScrambles
 scrambleTime = datetime.time(hour=7, minute=00, tzinfo=timezone)
 scrambleChannelId = 1322667465372598333
-dailyCubes = ["two", "four_fast", "five", "six", "seven", "skewb", "sq1", "mega", "pyra"]
+dailyCubes = ["two", "four_fast", "five", "six", "seven", "skewb", "sq1", "mega", "pyra", "three_oh"]
 dailyAverages = ["Single", "Mo3", "Ao5"]
 
-@tasks.loop(minutes=10)
+@tasks.loop(time=scrambleTime)
 async def sendDailyScramble():
 	await client.wait_until_ready()
 	scrambleChannel = client.get_channel(scrambleChannelId)
@@ -78,7 +78,7 @@ def scramble(cube, amount, sender="Unknown peep", daily=False):
 			scramble_cube = cube
 		else:
 			scramble_cube = "three"
-		response = subprocess.run(['java', '-jar', 'tnoodle-cli-1.0.0.jar', 'scramble', '-p', str(scramble_cube), '-c', str(amount)], capture_output=True).stdout
+		response = subprocess.run(['java', '-jar', 'CLI/tnoodle-cli-1.1.0.jar', 'scramble', '-p', str(scramble_cube), '-c', str(amount)], capture_output=True).stdout
 		response = str(response)
 		if cube != "sq1" and cube != "clock":
 			response_clean = response.split('\"')
