@@ -10,7 +10,7 @@ There is a command for every wca event, hope to add unofficial soon!
 ## Contributors
 Main dev: Digipr01
 
-I have used Tnoodle-CLI version 1.1.0 made by SpeedcuberOSS
+I have used [Tnoodle-CLI version 1.1.0 made by SpeedcuberOSS](https://www.github.com/SpeedcuberOSS/tnoodle-cli)
 
 ## To-do:
 add secrets
