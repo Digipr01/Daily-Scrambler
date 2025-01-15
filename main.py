@@ -13,6 +13,12 @@ def parseToken():
         file_data = json.load(read_file)
         return file_data["token"]
 
+def generateDailies():
+	daily3x3Average = random.choice(dailyAverages)
+	dailyCube = random.choice(dailyCubes)
+	dailyCubeAverage = random.choice(dailyAverages)
+	fileName= "dailyScrambles.json"
+
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
@@ -23,6 +29,7 @@ privateGuild = discord.Object(id=1303082498929983549)
 #dailyScrambles
 scrambleTime = datetime.time(hour=7, minute=00, tzinfo=timezone)
 scrambleChannelId = 1322667465372598333
+errorChannelId = 1328730912640208897
 dailyCubes = ["two", "four_fast", "five", "six", "seven", "skewb", "sq1", "mega", "pyra", "three_oh"]
 dailyAverages = ["Single", "Mo3", "Ao5"]
 
@@ -112,9 +119,17 @@ def scramble(cube, amount, sender="Unknown peep", daily=False):
 @client.event
 async def on_ready():
     print(f"Bot online as {client.user.name}.")
+    sendDailyScramble.start()
+    await client.change_presence(activity=discord.Activity(name="Scrambling cubes for the DannyCubeTv Discord server", type=1))
     await tree.sync()
     print("synced commands")
-    sendDailyScramble.start()
+
+@client.event
+async def on_resumed():
+	print(f"(Re)connected")
+	errorChannel = client.get_channel(errorChannelId)
+	errorChannel.send(f"(Re)connected to discord, this could be a forced restart, or be caused by an error/internet interruption.")
+
 
 @tree.command(name="info", description="About the bot")
 async def command_info(interaction):
@@ -221,6 +236,9 @@ async def command_3x3OH(interaction, amount: typing.Literal["Single", "Mo3", "Ao
 	await interaction.response.send_message("Generating scrambles, give me a second")
 	await interaction.edit_original_response(content=None, embed=scramble("three_oh", AverageTypes[amount], sender=interaction.user))
 
+@tree.command(name="test", description="Check if bot is alive")
+async def command_test(interaction):
+	await interaction.response.send_message("I'm alive!", ephemeral=True)
 
 token = parseToken()
 client.run(token)
