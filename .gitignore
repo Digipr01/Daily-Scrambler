@@ -1,3 +1,5 @@
 configure.json
 __pycache__
 Output.json
+.env
+dailyScrambles.json

@@ -2,16 +2,13 @@ import discord
 from discord import app_commands
 from discord.ext import tasks
 import os
-import json
+from dotenv import load_dotenv
 import subprocess
 import typing
 import datetime
 import random
 
-def parseToken():
-    with open("configure.json") as read_file:
-        file_data = json.load(read_file)
-        return file_data["token"]
+load_dotenv()
 
 def generateDailies():
 	daily3x3Average = random.choice(dailyAverages)
@@ -122,24 +119,20 @@ async def on_ready():
     sendDailyScramble.start()
     await client.change_presence(activity=discord.Activity(name="Scrambling cubes for the DannyCubeTv Discord server", type=1))
     await tree.sync()
+    errorChannel = client.get_channel(errorChannelId)
+    await errorChannel.send(f"Connected to discord, synced commands.")
     print("synced commands")
 
 @client.event
 async def on_resumed():
 	print(f"(Re)connected")
 	errorChannel = client.get_channel(errorChannelId)
-	errorChannel.send(f"(Re)connected to discord, this could be a forced restart, or be caused by an error/internet interruption.")
+	await errorChannel.send(f"(Re)connected to discord, this could be a forced restart, or be caused by an error/internet interruption.")
 
 
 @tree.command(name="info", description="About the bot")
 async def command_info(interaction):
-	await interaction.response.send_message("This bot was made to automate daily scrambles in the DannyHTv discord server. It was made and hosted by Digipr01. For any questions and suggestions, you can DM him.")
-
-@tree.command(name="terminate", description="Shuts off the bot")
-async def command_shutdown(interaction):
-	await interaction.response.send_message("Shutting down DannyHTV bot", ephemeral=True)
-	os._exit(os.EX_OK)
-	
+	await interaction.response.send_message("This bot was made to automate daily scrambles in the DannyHTv discord server. It was made and hosted by @Digipr01. For any questions and suggestions, you can DM him.")
 
 @tree.command(name="2x2", description="Generates 2x2 scrambles.")
 @app_commands.describe(amount="How many cubes do you want scrambled?")
@@ -236,9 +229,4 @@ async def command_3x3OH(interaction, amount: typing.Literal["Single", "Mo3", "Ao
 	await interaction.response.send_message("Generating scrambles, give me a second")
 	await interaction.edit_original_response(content=None, embed=scramble("three_oh", AverageTypes[amount], sender=interaction.user))
 
-@tree.command(name="test", description="Check if bot is alive")
-async def command_test(interaction):
-	await interaction.response.send_message("I'm alive!", ephemeral=True)
-
-token = parseToken()
-client.run(token)
+client.run(os.getenv('TOKEN')
