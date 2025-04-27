@@ -229,4 +229,4 @@ async def command_3x3OH(interaction, amount: typing.Literal["Single", "Mo3", "Ao
 	await interaction.response.send_message("Generating scrambles, give me a second")
 	await interaction.edit_original_response(content=None, embed=scramble("three_oh", AverageTypes[amount], sender=interaction.user))
 
-client.run(os.getenv('TOKEN')
+client.run(os.getenv('TOKEN'))
