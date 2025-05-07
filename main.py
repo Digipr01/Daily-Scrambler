@@ -19,15 +19,15 @@ def generateDailies():
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
-timezone = datetime.timezone(datetime.timedelta(hours=1))
+timezone = datetime.timezone(datetime.timedelta(hours=2))
 
-privateGuild = discord.Object(id=1303082498929983549)
+#privateGuild = discord.Object(id=1303082498929983549)
 
 #dailyScrambles
 scrambleTime = datetime.time(hour=7, minute=00, tzinfo=timezone)
-scrambleChannelId = 1322667465372598333
-errorChannelId = 1328730912640208897
-dailyCubes = ["two", "four_fast", "five", "six", "seven", "skewb", "sq1", "mega", "pyra", "three_oh"]
+scrambleChannelId = int(os.getenv('SCRAMBLE'))
+errorChannelId = int(os.getenv('ERROR'))
+dailyCubes = ["two", "four_fast", "five", "six", "seven",  "five", "six", "seven", "skewb", "sq1", "mega", "mega", "pyra", "three_oh"]
 dailyAverages = ["Single", "Mo3", "Ao5"]
 
 @tasks.loop(time=scrambleTime)
