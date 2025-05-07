@@ -84,11 +84,13 @@ def scramble(cube, amount, sender="Unknown peep", daily=False):
 			scramble_cube = "three"
 		response = subprocess.run(['java', '-jar', 'CLI/tnoodle-cli-1.1.0.jar', 'scramble', '-p', str(scramble_cube), '-c', str(amount)], capture_output=True).stdout
 		response = str(response)
+		print(response)
 		if cube != "sq1" and cube != "clock":
 			response_clean = response.split('\"')
 		else:
 			response_clean = response.split("\'")
-		scrambles = response_clean[1].split("\\n")
+		scrambles = response_clean[1].split("\\r\\n")
+		print(scrambles)
 		del scrambles[-1]
 		scrambles_formatted = ""
 		if cube != "mega":
@@ -98,13 +100,15 @@ def scramble(cube, amount, sender="Unknown peep", daily=False):
 					scrambles_formatted += str("\n")
 				scramble_embed.add_field(name=f"Scramble {i+1}:", value=scrambles[i], inline=False)
 		else:
-			for i in range(int(len(scrambles)/7)):
+			for i in range(int(len(scrambles))):
+				splitScramble = scrambles[i].split("\\n")
+				print(splitScramble)
 				currentScramble = ""
 				for j in range(7):
-					currentScramble += scrambles[i*7+j]
+					currentScramble += splitScramble[j]
 					if j != 6:
 						currentScramble += "\n"
-				scrambles_formatted += f"{str(int((i/7)+1))}: {currentScramble}"
+				scrambles_formatted += f"{i}: {currentScramble}"
 				if not i == len(scrambles):
 					scrambles_formatted += str("\n")
 				scramble_embed.add_field(name=f"Scramble {str(i+1)}:", value=currentScramble, inline=False)
